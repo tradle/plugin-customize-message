@@ -1,0 +1,31 @@
+{
+  "name": "@tradle/plugin-customize-message",
+  "version": "1.0.0",
+  "description": "customize the text of outbound messages before sending",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "author": "Mark Vayngrib <mark@tradle.io> (http://github.com/mvayngrib)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tradle/plugin-customize-message"
+  },
+  "dependencies": {
+    "@tradle/build-resource": "^2.9.1",
+    "@tradle/constants": "^2.1.0",
+    "@tradle/validate-resource": "^2.12.1"
+  },
+  "devDependencies": {
+    "@tradle/custom-models": "github:tradle/custom-models",
+    "@tradle/engine": "^5.4.0",
+    "@tradle/merge-models": "^2.1.0",
+    "@tradle/models": "github:tradle/models",
+    "@tradle/validate-model": "^2.4.2",
+    "tape": "^4.8.0"
+  },
+  "peerDependencies": {
+    "@tradle/engine": "^5.4.0"
+  }
+}
