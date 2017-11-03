@@ -1,3 +1,4 @@
+const co = require('co').wrap
 const { TYPE } = require('@tradle/constants')
 const { parseStub } = require('@tradle/validate-resource').utils
 const APPLICATION_STATUS_TYPES = [
@@ -7,10 +8,15 @@ const APPLICATION_STATUS_TYPES = [
   'tradle.ApplicationDenial'
 ]
 
-module.exports = function customizeMessage ({ conf, logger }) {
+module.exports = function customizeMessage ({ conf, getConf, logger }) {
 
-  function willSend ({ req, object }) {
+  const willSend = co(function* ({ req, object }) {
     if (!object) return
+
+    if (getConf) {
+      conf = yield getConf()
+      if (!conf) return
+    }
 
     const { application } = req
     const { models } = this
@@ -38,7 +44,7 @@ module.exports = function customizeMessage ({ conf, logger }) {
       logger.debug(`updated message on ${object[TYPE]}`)
       object.message = message
     }
-  }
+  })
 
   function getMessage ({ req, object, application, models, messages }) {
     const type = object[TYPE]

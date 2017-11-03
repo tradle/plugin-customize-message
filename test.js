@@ -1,4 +1,4 @@
-
+const co = require('co').wrap
 const test = require('tape')
 const { TYPE, SIG } = require('@tradle/constants')
 const buildResource = require('@tradle/build-resource')
@@ -48,7 +48,7 @@ const logger = {
   debug: console.log.bind(console)
 }
 
-test('basic', function (t) {
+test('basic', co(function* (t) {
   const plugin = createPlugin({
     conf: sampleConf,
     logger
@@ -75,7 +75,7 @@ test('basic', function (t) {
     form: 'tradle.PhotoID'
   }
 
-  plugin.willSend.call(bot, {
+  yield plugin.willSend.call(bot, {
     req,
     object: photoIdReq
   })
@@ -89,7 +89,7 @@ test('basic', function (t) {
     form: 'tradle.Residence'
   }
 
-  plugin.willSend.call(bot, {
+  yield plugin.willSend.call(bot, {
     req,
     object: firstResidenceReq
   })
@@ -104,7 +104,7 @@ test('basic', function (t) {
     form: 'tradle.Residence'
   }
 
-  plugin.willSend.call(bot, {
+  yield plugin.willSend.call(bot, {
     req,
     object: secondResidenceReq
   })
@@ -117,14 +117,14 @@ test('basic', function (t) {
     [SIG]: 'abc'
   }
 
-  plugin.willSend.call(bot, {
+  yield plugin.willSend.call(bot, {
     req,
     object: approval
   })
 
   t.equal(approval.message, sampleConf['tradle.ApplicationApproval'][TEST_PRODUCT.id])
   t.end()
-})
+}))
 
 function fakeStub (type) {
   return {
