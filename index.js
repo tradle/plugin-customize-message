@@ -8,7 +8,7 @@ const APPLICATION_STATUS_TYPES = [
   'tradle.ApplicationDenial'
 ]
 
-module.exports = function customizeMessage ({ conf, getConf, logger }) {
+module.exports = function customizeMessage ({ models, conf, getConf, logger }) {
 
   const willSend = co(function* ({ req, object }) {
     if (!object) return
@@ -19,14 +19,12 @@ module.exports = function customizeMessage ({ conf, getConf, logger }) {
     }
 
     const { application } = req
-    const { models } = this
-
     const appSpecific = application && conf[application.requestFor]
     const props = {
       req,
       object,
       application,
-      models: models.all,
+      models,
       messages: appSpecific
     }
 
@@ -46,7 +44,7 @@ module.exports = function customizeMessage ({ conf, getConf, logger }) {
     }
   })
 
-  function getMessage ({ req, object, application, models, messages }) {
+  function getMessage ({ req, object, application, messages }) {
     const type = object[TYPE]
     let message = messages[type]
     if (typeof message === 'undefined') return

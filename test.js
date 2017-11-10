@@ -50,15 +50,10 @@ const logger = {
 
 test('basic', co(function* (t) {
   const plugin = createPlugin({
+    models,
     conf: sampleConf,
     logger
   })
-
-  const bot = {
-    models: {
-      all: models
-    }
-  }
 
   const application = {
     requestFor: TEST_PRODUCT.id,
@@ -75,7 +70,7 @@ test('basic', co(function* (t) {
     form: 'tradle.PhotoID'
   }
 
-  yield plugin.willSend.call(bot, {
+  yield plugin.willSend({
     req,
     object: photoIdReq
   })
@@ -89,7 +84,7 @@ test('basic', co(function* (t) {
     form: 'tradle.Residence'
   }
 
-  yield plugin.willSend.call(bot, {
+  yield plugin.willSend({
     req,
     object: firstResidenceReq
   })
@@ -104,7 +99,7 @@ test('basic', co(function* (t) {
     form: 'tradle.Residence'
   }
 
-  yield plugin.willSend.call(bot, {
+  yield plugin.willSend({
     req,
     object: secondResidenceReq
   })
@@ -117,7 +112,7 @@ test('basic', co(function* (t) {
     [SIG]: 'abc'
   }
 
-  yield plugin.willSend.call(bot, {
+  yield plugin.willSend({
     req,
     object: approval
   })
