@@ -10,7 +10,7 @@ const APPLICATION_STATUS_TYPES = [
 
 module.exports = function customizeMessage ({ models, conf, getConf, logger }) {
 
-  const willSend = co(function* ({ req, object }) {
+  const willSend = co(function* ({ to, application, object }) {
     if (!object) return
 
     if (getConf) {
@@ -18,10 +18,8 @@ module.exports = function customizeMessage ({ models, conf, getConf, logger }) {
       if (!conf) return
     }
 
-    const { application } = req
     const appSpecific = application && conf[application.requestFor]
     const props = {
-      req,
       object,
       application,
       models,
@@ -44,7 +42,7 @@ module.exports = function customizeMessage ({ models, conf, getConf, logger }) {
     }
   })
 
-  function getMessage ({ req, object, application, messages }) {
+  function getMessage ({ object, application, messages }) {
     const type = object[TYPE]
     let message = messages[type]
     if (typeof message === 'undefined') return
