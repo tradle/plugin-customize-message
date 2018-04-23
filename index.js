@@ -48,7 +48,6 @@ module.exports = function customizeMessage ({ models, conf, getConf, logger }) {
     if (typeof message === 'undefined') return
 
     const { form } = object
-    if (object[TYPE] === 'tradle.ApplicationApproval') debugger
     if (message && typeof message === 'object') {
       if (type === 'tradle.FormRequest' || type === 'tradle.FormError') {
         message = message[form]
