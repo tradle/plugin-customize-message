@@ -1,5 +1,5 @@
 const co = require('co').wrap
-const { TYPE } = require('@tradle/constants')
+const { TYPE, SIG } = require('@tradle/constants')
 const { parseStub } = require('@tradle/validate-resource').utils
 const APPLICATION_STATUS_TYPES = [
   'tradle.Confirmation',
@@ -11,7 +11,7 @@ const APPLICATION_STATUS_TYPES = [
 module.exports = function customizeMessage ({ models, conf, getConf, logger }) {
 
   const willSend = co(function* ({ to, application, object }) {
-    if (!object) return
+    if (!object  ||  object[SIG]) return
 
     if (getConf) {
       conf = yield getConf()
